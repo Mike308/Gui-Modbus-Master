@@ -21,6 +21,19 @@ public:
 
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    Modbus * modbusMaster;
+    QTimer * timer;
+
+private:
+
+    QLabel * statusLabel;
+
+private slots:
+    void on_connectButton_clicked();
+    void onReadReadySlot(QModbusDataUnit);
+    void onTimeoutSlot();
+    void onReadError(QString);
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

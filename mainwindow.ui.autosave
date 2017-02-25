@@ -656,6 +656,9 @@
        </disabled>
       </palette>
      </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
     </widget>
     <widget class="QDial" name="dial_2">
      <property name="geometry">
@@ -1081,6 +1084,9 @@
        </disabled>
       </palette>
      </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
     </widget>
     <widget class="QDial" name="dial_3">
      <property name="geometry">
@@ -1505,6 +1511,9 @@
         </colorrole>
        </disabled>
       </palette>
+     </property>
+     <property name="maximum">
+      <number>255</number>
      </property>
     </widget>
     <widget class="QLabel" name="label_5">
