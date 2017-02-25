@@ -67,7 +67,7 @@
       <string>Baudrate:</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="portList">
      <property name="geometry">
       <rect>
        <x>43</x>
@@ -77,7 +77,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="baudList">
      <property name="geometry">
       <rect>
        <x>236</x>
@@ -87,7 +87,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="connectButton">
      <property name="geometry">
       <rect>
        <x>42</x>
