@@ -2,8 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QString>
+#include <QTimer>
+#include <QLabel>
+
+#include "modbus.h"
 
 namespace Ui {
 class MainWindow;
