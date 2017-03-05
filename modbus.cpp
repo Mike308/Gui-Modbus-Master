@@ -20,7 +20,6 @@ bool Modbus::connectToSlave(QString port, int baud){
         modbusSlave->setConnectionParameter(QModbusDevice::SerialBaudRateParameter,baud);
         modbusSlave->setConnectionParameter(QModbusDevice::SerialDataBitsParameter,QSerialPort::Data8);
         modbusSlave->setConnectionParameter(QModbusDevice::SerialStopBitsParameter,QSerialPort::OneStop);
-        modbusSlave->setTimeout(10000);
         modbusSlave->setTimeout(1000);
         modbusSlave->setNumberOfRetries(3);
 
@@ -28,7 +27,10 @@ bool Modbus::connectToSlave(QString port, int baud){
 
     if (!modbusSlave->connectDevice()){
 
+        qDebug () << "Error: "<< modbusSlave->errorString();
+
         return false;
+
     }else{
 
         return true;
@@ -41,10 +43,7 @@ bool Modbus::connectToSlave(QString port, int baud){
 
 void Modbus::disconnectSlave(){
 
-    if (modbusSlave->state() == QModbusDevice::ConnectedState){
-
-        modbusSlave->disconnectDevice();
-    }
+    modbusSlave->disconnectDevice();
 
 
 }
@@ -131,11 +130,11 @@ void Modbus::readReady(){
         const QModbusDataUnit modbusDataUnit = reply->result();
         emit onReadReady(modbusDataUnit);
 
-        for (uint i=0; i<modbusDataUnit.valueCount();i++){
+//        for (uint i=0; i<modbusDataUnit.valueCount();i++){
 
-            qDebug () << "Value: " << modbusDataUnit.value(i);
+//          //  qDebug () << "Value: " << modbusDataUnit.value(i);
 
-        }
+//        }
 
     }
 
