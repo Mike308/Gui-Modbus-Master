@@ -21,6 +21,7 @@ bool Modbus::connectToSlave(QString port, int baud){
         modbusSlave->setConnectionParameter(QModbusDevice::SerialDataBitsParameter,QSerialPort::Data8);
         modbusSlave->setConnectionParameter(QModbusDevice::SerialStopBitsParameter,QSerialPort::OneStop);
         modbusSlave->setTimeout(10000);
+        modbusSlave->setTimeout(1000);
         modbusSlave->setNumberOfRetries(3);
 
     }
