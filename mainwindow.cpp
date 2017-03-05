@@ -97,3 +97,56 @@ void MainWindow::onReadError(QString msg){
 
 
 }
+
+void MainWindow::on_led1_stateChanged(int arg1)
+{
+    if (ui->led1->isChecked()){
+
+        modbusMaster->executeWriteRequest(10,50,Modbus::Coils,1);
+
+    }else{
+
+        modbusMaster->executeWriteRequest(10,50,Modbus::Coils,0);
+    }
+}
+
+void MainWindow::on_led2_stateChanged(int arg1)
+{
+    if (ui->led2->isChecked()){
+
+        modbusMaster->executeWriteRequest(10,51,Modbus::Coils,1);
+    }else{
+
+        modbusMaster->executeWriteRequest(10,51,Modbus::Coils,0);
+    }
+}
+
+void MainWindow::on_rDial_actionTriggered(int action)
+{
+    int val = ui->rDial->value();
+    ui->rLabel->setText(QString::number(val));
+
+}
+
+void MainWindow::on_gDial_actionTriggered(int action)
+{
+    int val = ui->rDial->value();
+    ui->gLabel->setText(QString::number(val));
+}
+
+void MainWindow::on_MainWindow_destroyed()
+{
+    delete modbusMaster;
+}
+
+void MainWindow::on_disconnectButton_clicked()
+{
+    timer->stop();
+    disconnect(modbusMaster,SIGNAL(onReadReady(QModbusDataUnit)),this,0);
+    disconnect(modbusMaster,SIGNAL(onReadError(QString)),this,0);
+
+
+    modbusMaster->disconnectSlave();
+    ui->connectButton->setEnabled(true);
+    ui->disconnectButton->setEnabled(false);
+}
