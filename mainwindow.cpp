@@ -82,6 +82,10 @@ void MainWindow::onReadReadySlot(QModbusDataUnit reg){
 
 void MainWindow::on_pushButton_clicked(){
 
+    modbusMaster->executeWriteRequest(10,10,Modbus::HoldingRegisters,ui->rDial->value());
+    modbusMaster->executeWriteRequest(10,11,Modbus::HoldingRegisters,ui->gDial->value());
+    modbusMaster->executeWriteRequest(10,12,Modbus::HoldingRegisters,ui->bDial->value());
+
 
 
 }
