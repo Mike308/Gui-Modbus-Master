@@ -38,6 +38,19 @@ bool Modbus::connectToSlave(QString port, int baud){
 }
 
 
+void Modbus::disconnectSlave(){
+
+    if (modbusSlave->state() == QModbusDevice::ConnectedState){
+
+        modbusSlave->disconnectDevice();
+    }
+
+
+}
+
+
+
+
 
 QModbusDataUnit Modbus::prepareRequest(int regAdress, int regType){
 
