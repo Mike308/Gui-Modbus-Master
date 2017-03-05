@@ -18,11 +18,13 @@ class Modbus : public QObject
 
 public:
     Modbus();
+
     bool connectToSlave(QString port, int baud);
     void executeReadRequest(int slaveAdress, int regAdress, int regType); //passing adress of slave, adress of register and register type
     void executeWriteRequest(int slaveAdress, int regAdress, int regType, int value); //passing adress of slave, adress of register and register type
-
+    void disconnectSlave();
     enum RegType { DiscreteInputs = 1, Coils = 2, InputRegisters = 3, HoldingRegisters = 4 };
+
 
 
 private:
