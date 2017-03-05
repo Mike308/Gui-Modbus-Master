@@ -35,6 +35,18 @@ private slots:
     void onReadError(QString);
     void on_pushButton_clicked();
 
+    void on_led1_stateChanged(int arg1);
+
+    void on_led2_stateChanged(int arg1);
+
+    void on_rDial_actionTriggered(int action);
+
+    void on_gDial_actionTriggered(int action);
+
+    void on_MainWindow_destroyed();
+
+    void on_disconnectButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

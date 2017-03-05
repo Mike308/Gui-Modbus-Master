@@ -34,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     statusLabel->setText("Waiting..");
     ui->statusBar->addWidget(statusLabel);
 
-    connect(modbusMaster,SIGNAL(onReadReady(QModbusDataUnit)),this,SLOT(onReadReadySlot(QModbusDataUnit)));
-    connect(modbusMaster,SIGNAL(onReadError(QString)),this,SLOT(onReadError(QString)));
+
+    ui->disconnectButton->setEnabled(false);
 
 
 
@@ -96,7 +96,7 @@ void MainWindow::onReadReadySlot(QModbusDataUnit reg){
     ui->t1Gauge->setValue(t1);
     ui->t2Gauge->setValue(t2);
 
-    timer->start();
+   // timer->start();
 
 
 
@@ -116,6 +116,7 @@ void MainWindow::on_pushButton_clicked(){
 void MainWindow::onTimeoutSlot(){
 
     modbusMaster->executeReadRequest(10,100,Modbus::InputRegisters);
+  //  qDebug () << "Execute Request ";
 }
 
 void MainWindow::onReadError(QString msg){
