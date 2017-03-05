@@ -54,16 +54,39 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_connectButton_clicked(){
 
-    modbusMaster->connectToSlave(ui->portList->currentText(),ui->baudList->currentText().toInt());
-    connect(timer,SIGNAL(timeout()),this,SLOT(onTimeoutSlot()));
-    timer->start(1000);
+
+
+         if(modbusMaster->connectToSlave(ui->portList->currentText(),ui->baudList->currentText().toInt())){
+
+             connect(timer,SIGNAL(timeout()),this,SLOT(onTimeoutSlot()));
+             connect(modbusMaster,SIGNAL(onReadReady(QModbusDataUnit)),this,SLOT(onReadReadySlot(QModbusDataUnit)));
+             connect(modbusMaster,SIGNAL(onReadError(QString)),this,SLOT(onReadError(QString)));
+             timer->start(5000);
+             ui->connectButton->setEnabled(false);
+             ui->disconnectButton->setEnabled(true);
+
+
+         }else{
+
+             statusLabel->setText("Error");
+         }
+
+
+
+
+
+
+
+
+
+
 
 
 }
 
 void MainWindow::onReadReadySlot(QModbusDataUnit reg){
 
-    timer->stop();
+    //timer->stop();
 
     int t1 = reg.value(0);
     int t2 = reg.value(1);
