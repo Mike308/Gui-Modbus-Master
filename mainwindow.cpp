@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    modbusMaster = new Modbus();
+
     timer = new QTimer();
     statusLabel = new QLabel();
 
@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     foreach (QSerialPortInfo port, comPorts){
 
-      ui->portList->addItem(port.portName());
+        ui->portList->addItem(port.portName());
 
     }
 
@@ -54,22 +54,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_connectButton_clicked(){
 
+    modbusMaster = new Modbus();
 
 
-         if(modbusMaster->connectToSlave(ui->portList->currentText(),ui->baudList->currentText().toInt())){
+    if(modbusMaster->connectToSlave(ui->portList->currentText(),ui->baudList->currentText().toInt())){
 
-             connect(timer,SIGNAL(timeout()),this,SLOT(onTimeoutSlot()));
-             connect(modbusMaster,SIGNAL(onReadReady(QModbusDataUnit)),this,SLOT(onReadReadySlot(QModbusDataUnit)));
-             connect(modbusMaster,SIGNAL(onReadError(QString)),this,SLOT(onReadError(QString)));
-             timer->start(5000);
-             ui->connectButton->setEnabled(false);
-             ui->disconnectButton->setEnabled(true);
+        connect(timer,SIGNAL(timeout()),this,SLOT(onTimeoutSlot()));
+        connect(modbusMaster,SIGNAL(onReadReady(QModbusDataUnit)),this,SLOT(onReadReadySlot(QModbusDataUnit)));
+        connect(modbusMaster,SIGNAL(onReadError(QString)),this,SLOT(onReadError(QString)));
+        timer->start(5000);
+        ui->connectButton->setEnabled(false);
+        ui->disconnectButton->setEnabled(true);
 
 
-         }else{
+    }else{
 
-             statusLabel->setText("Error");
-         }
+        statusLabel->setText("Error");
+    }
 
 
 
@@ -96,7 +97,7 @@ void MainWindow::onReadReadySlot(QModbusDataUnit reg){
     ui->t1Gauge->setValue(t1);
     ui->t2Gauge->setValue(t2);
 
-   // timer->start();
+    // timer->start();
 
 
 
@@ -115,8 +116,11 @@ void MainWindow::on_pushButton_clicked(){
 
 void MainWindow::onTimeoutSlot(){
 
+    static int i = 0;
+    i++;
     modbusMaster->executeReadRequest(10,100,Modbus::InputRegisters);
-  //  qDebug () << "Execute Request ";
+
+      qDebug () << "Debug counter: "<<i;
 }
 
 void MainWindow::onReadError(QString msg){

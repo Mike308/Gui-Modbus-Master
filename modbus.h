@@ -18,8 +18,9 @@ class Modbus : public QObject
 
 public:
     Modbus();
+    ~Modbus();
 
-    bool connectToSlave(QString port, int baud);
+    bool connectToSlave(const QString port, int baud);
     void executeReadRequest(int slaveAdress, int regAdress, int regType); //passing adress of slave, adress of register and register type
     void executeWriteRequest(int slaveAdress, int regAdress, int regType, int value); //passing adress of slave, adress of register and register type
     void disconnectSlave();

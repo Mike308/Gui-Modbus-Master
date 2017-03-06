@@ -2,18 +2,28 @@
 
 Modbus::Modbus(){
 
-    modbusSlave = new QModbusRtuSerialMaster(this);
+     modbusSlave = new QModbusRtuSerialMaster(this);
 
 
 }
 
+Modbus::~Modbus(){
 
-bool Modbus::connectToSlave(QString port, int baud){
+    qDebug () << "Modbus die";
+}
 
 
+bool Modbus::connectToSlave(const QString port, int baud){
+
+
+
+    qDebug () << "Connection state: " << modbusSlave->state();
     if (!modbusSlave) return false;
 
+
     if (modbusSlave->state() != QModbusDevice::ConnectedState){
+
+        qDebug () << "Setting Paramaters...";
 
         modbusSlave->setConnectionParameter(QModbusDevice::SerialPortNameParameter,port);
         modbusSlave->setConnectionParameter(QModbusDevice::SerialParityParameter,QSerialPort::NoParity);
@@ -25,6 +35,7 @@ bool Modbus::connectToSlave(QString port, int baud){
 
     }
 
+
     if (!modbusSlave->connectDevice()){
 
         qDebug () << "Error: "<< modbusSlave->errorString();
@@ -33,7 +44,9 @@ bool Modbus::connectToSlave(QString port, int baud){
 
     }else{
 
+        qDebug () << "Connection state: " << modbusSlave->state();
         return true;
+
 
     }
 
@@ -43,8 +56,13 @@ bool Modbus::connectToSlave(QString port, int baud){
 
 void Modbus::disconnectSlave(){
 
-    modbusSlave->disconnectDevice();
+    qDebug () << "Connection state: " << modbusSlave->state();
 
+    modbusSlave->disconnectDevice();
+   // modbusSlave->blockSignals(true);
+    this->~Modbus();
+
+    qDebug () << "Connection state: " << modbusSlave->state();
 
 }
 
@@ -78,7 +96,7 @@ void Modbus::executeReadRequest(int slaveAdress, int regAdress, int regType){
 
     }else{
 
-        qDebug () << "Error: " << modbusSlave->errorString();
+        qDebug () << "Error while executing read request: " << modbusSlave->errorString();
 
     }
 
@@ -112,7 +130,7 @@ void Modbus::executeWriteRequest(int slaveAdress, int regAdress, int regType, in
         }
     }else{
 
-        qDebug () << "Error: " << reply->errorString();
+        qDebug () << "Error while executing write request: " << reply->errorString();
     }
 
 
@@ -145,7 +163,7 @@ void Modbus::readReady(){
 
     }else {
 
-        qDebug () << "Error: " << reply->errorString();
+        qDebug () << "Other Error: " << reply->errorString();
         emit onReadError(reply->errorString());
 
     }
